@@ -22,8 +22,4 @@ public interface StaffLoanRepository extends JpaRepository<StaffLoan, Integer>{
 	@Query(value="SELECT * FROM swazibank_intranet.staff_loan where loan_status = 'Loan Cancelled' order by last_updated desc", nativeQuery=true)
 	List<StaffLoan> findCancelled();
 	
-	
-	
-
-	
 }

@@ -10,9 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -60,10 +64,8 @@ public class StaffLoanController {
 	}
 	private static String JSON_STAFF_LOAN_SETUP = "http://mlu-itc-dw-03.mshome.net:8091/setuprest/staffLoanSetup/1";
 	
-	private static String JSON_STAFF_LOAN_APP = null;
-	
-	
-	
+	Logger log = Logger.getLogger(StaffLoanController.class.getName());
+	//private static Logger LOGGER = LoggerFactory.getLogger(StaffLoanController.class);
 	
 	@Autowired
 	RestTemplate restTemplate;
@@ -259,7 +261,7 @@ public class StaffLoanController {
 			responseAction = "redirect:/staffLoan/securitiesShortPdf";
 
 		} else if (action.equals("Save")) {
-
+			String mailBody = null;
 			atts.addFlashAttribute("savedStaffLoan", theStaffLoan);
 			Random random = new Random();
 			int randomWithNextInt = random.nextInt(200);
@@ -271,10 +273,13 @@ public class StaffLoanController {
 				fileService.uploadFile(file, uploadDir);
 
 			} catch (Exception ex) {
+				
+				log.log(Level.SEVERE, "failed to upload the attachment");
+				
 				System.out.println(ex.toString());
 			}
 
-			String mailBody = null;
+			
 			if (nextApprover.equals("Supervisor")) {
 
 				theStaffLoan.setLoanStatus("Pending Supervisor Action");
