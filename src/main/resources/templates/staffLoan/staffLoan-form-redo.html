@@ -1,0 +1,528 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+
+<link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link href="../static/css/menu.css" rel="stylesheet" th:href="@{/css/menu.css}" />
+<link href="../static/js/bootstrap.min.js" rel="stylesheet" th:href="@{/js/bootstrap.min.js}" />
+<link href="../static/js/popper.min.js" rel="stylesheet" th:href="@{/js/popper.min.js}" />
+
+<title>Staff Loan</title>
+<style>
+span {
+	color: #b94a48;
+	font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header">...</div>
+	<div class="container">
+
+		<hr>
+
+		<p class="h4 mb-4">New Staff Loan Application</p>
+
+		<form action="#" th:action="@{/staffLoan/saveRedo}" class="form"
+			th:object="${staffLoan}" method="POST">
+			<div style="border-style: solid;">
+
+				<div style="border-style: outset;">
+
+					<h5>Employee Information</h5>
+					<hr>
+
+					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" th:field="*{dateCreated}" />
+					<input type="hidden" th:field="*{employeeLoanRef}" />
+					<input type="hidden" th:field="*{hodEmail}" />
+					<input type="hidden" th:field="*{payrollAdministrator}" />
+					<input type="hidden" th:field="*{payrollAdministratorEmail}" />
+					<input type="hidden" th:field="*{seniorHrManager}" />
+					<input type="hidden" th:field="*{seniorHrManagerEmail}" />
+					<input type="hidden" th:field="*{securitiesSupervisor}" />
+					<input type="hidden" th:field="*{securitiesSupervisorEmail}" />
+					<input type="hidden" th:field="*{loanOpeningSupervisor}" />
+					<input type="hidden" th:field="*{loanOpeningSupervisorEmail}" />
+					<input type="hidden" th:field="*{payslipLocation}" />
+					<input type="hidden" th:field="*{securitiesDocumentLocation}" />
+
+
+					<div class="row">
+
+						<div class="form-group mb-2 col-2">
+							<label for="employeeCode">Employee Code:</label> <input
+								type="text" th:field="*{employeeCode}" class="form-control">
+							<span th:if="${#fields.hasErrors('employeeCode')}"
+								th:errors="*{employeeCode}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="firstName">First Name:</label> <input type="text"
+								th:field="*{firstName}" class="form-control"> <span
+								th:if="${#fields.hasErrors('firstName')}"
+								th:errors="*{firstName}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="surname">Surname:</label> <input type="text"
+								th:field="*{surname}" class="form-control"> <span
+								th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="idNumber">ID Number:</label> <input type="number"
+								th:field="*{idNumber}" class="form-control"> <span
+								th:if="${#fields.hasErrors('idNumber')}" th:errors="*{idNumber}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="cif">CIF:</label> <input type="number"
+								th:field="*{cif}" class="form-control"> <span
+								th:if="${#fields.hasErrors('cif')}" th:errors="*{cif}"></span>
+						</div>
+
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="cif">Dependents:</label> <input type="number"
+								th:field="*{noOfDependants}" class="form-control">
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{dateOfBirth}">Date of Birth:</label> <input
+								type="date" th:field="*{dateOfBirth}" class="form-control">
+							<span th:if="${#fields.hasErrors('dateOfBirth')}"
+								th:errors="*{dateOfBirth}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="telelephoneNo">Telephone No:</label> <input
+								type="text" th:field="*{telelephoneNo}" class="form-control">
+							<span th:if="${#fields.hasErrors('telelephoneNo')}"
+								th:errors="*{telelephoneNo}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{resAddress}">Residential Address:</label> <input
+								type="text" th:field="*{resAddress}" class="form-control">
+							<span th:if="${#fields.hasErrors('resAddress')}"
+								th:errors="*{resAddress}"></span>
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="city">City:</label> <input type="text"
+								th:field="*{city}" class="form-control"> <span
+								th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="branchAddress">Branch Address:</label> <input
+								type="text" th:field="*{branchAddress}" class="form-control">
+							<span th:if="${#fields.hasErrors('branchAddress')}"
+								th:errors="*{branchAddress}"></span>
+
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{location}">Location:</label> <select
+								th:field="*{location}">
+								<option th:value="''" th:text="''"></option>
+								<option th:value="'Ezulwini_Branch'" th:text="'Ezulwini_Branch'"></option>
+								<option th:value="'Head_Office'" th:text="'Head_Office'"></option>
+								<option th:value="'Manzini_Branch'" th:text="'Manzini_Branch'"></option>
+								<option th:value="'Manzini_OPC'" th:text="'Manzini_OPC'"></option>
+								<option th:value="'Manzini_Cash_center'" th:text="'Manzini_Cash_center'"></option>
+								<option th:value="'Matsapha_Branch'" th:text="'Matsapha_Branch'"></option>
+								<option th:value="'Matata_Branch'" th:text="'Matata_Branch'"></option>
+								<option th:value="'Mbabane_Branch'" th:text="'Mbabane_Branch'"></option>
+								<option th:value="'Nhlangano_Branch'" th:text="'Nhlangano_branch'"></option>
+								<option th:value="'Piggs_Peak_Branch'" th:text="'Piggspeak_Branch'"></option>
+								<option th:value="'Siphofaneni_Branch'" th:text="'Siphofaneni_Branch'"></option>
+								<option th:value="'Siteki_Branch'" th:text="'Siteki_Branch'"></option>
+								<option th:value="'Simunye_Branch'" th:text="'Simunye_Branch'"></option>
+							</select> <span th:if="${#fields.hasErrors('location')}"
+								th:errors="*{location}"></span>
+
+						</div>
+
+					</div>
+					<div class="row">
+
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="employeePosition">Position:</label> <input
+								type="text" th:field="*{employeePosition}" class="form-control">
+							<span th:if="${#fields.hasErrors('employeePosition')}"
+								th:errors="*{employeePosition}"></span>
+						</div>
+
+						<div class="form-group mb-1 col-1">
+							<label for="employeeGrade">Grade:</label> <input
+								type="text" th:field="*{employeeGrade}" class="form-control">
+							<span th:if="${#fields.hasErrors('employeeGrade')}"
+								th:errors="*{employeeGrade}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="department">Department:</label> <select
+								th:field="*{department}">
+								<option th:value="''" th:text="''"></option>
+								<option th:value="'Business_Banking'" th:text="'Business_Banking'"></option>
+								<option th:value="'Credit'" th:text="'Credit'"></option>
+								<option th:value="'Corporate_services'" th:text="'Corporate_services'"></option>
+								<option th:value="'Finance'" th:text="'Finance'"></option>
+								<option th:value="'Information_Technology'" th:text="'Information_Technology'"></option>
+								<option th:value="'Internal_Audit'" th:text="'Internal_Audit'"></option>
+								<option th:value="'Marketting'" th:text="'Marketting'"></option>
+								<option th:value="'Office_of_the_MD'" th:text="'Office_of_the_MD'"></option>
+								<option th:value="'Operations'" th:text="'Operations'"></option>
+								<option th:value="'Legal'" th:text="'Legal'"></option>
+								<option th:value="'Risk_and_Compliance'" th:text="'Risk_and_Compliance'"></option>
+							</select> <span th:if="${#fields.hasErrors('department')}"
+								th:errors="*{department}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="employeeEmail">Employee Email:</label> <input
+								type="email" th:field="*{employeeEmail}" class="form-control">
+							<span th:if="${#fields.hasErrors('employeeEmail')}"
+								th:errors="*{employeeEmail}"></span>
+
+						</div>
+
+						<div class="form-group mb-3 col-3">
+							<label for="supervisor">Branch Mgr/supervisor(H/O):</label><input type="text"
+								th:field="*{supervisor}" class="form-control"> <span
+								th:if="${#fields.hasErrors('supervisor')}"
+								th:errors="*{supervisor}"></span>
+						</div>
+						<div class="form-group mb-2 col-2">
+							<label for="supervisorEmail">Mgr/Spv Email:</label> <input
+								type="text" th:field="*{supervisorEmail}" class="form-control">
+							<span th:if="${#fields.hasErrors('supervisorEmail')}"
+								th:errors="*{supervisorEmail}"></span>
+						</div>
+
+
+					</div>
+				</div>
+
+
+				<div style="border-style: outset;">
+
+					<h5>Employee Liabilities</h5>
+					<hr>
+					<div class="row">
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="basic_salary">Basic Salary:</label> <input
+								type="number" step="0.01" th:field="*{basic_salary}"
+								class="form-control">
+
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Allowances:</label> <input type="number"
+								step="0.01" th:field="*{allowances}" class="form-control">
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Housing Loan Ded:</label> <input
+								type="number" th:field="*{housingloanDeductions}" step="0.01"
+								class="form-control">
+						</div>
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Housing Loan Bal:</label> <input
+								type="number" th:field="*{housingloanBalance}" step="0.01"
+								class="form-control">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Rural-Housing Ded:</label> <input
+								type="number" th:field="*{ruralHousingLoanDeductions}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Rural Housing Loan Deductions">
+						</div>
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Rural Housing Bal:</label> <input
+								type="number" th:field="*{ruralHousingLoanBalance}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Rural Housing Loan Balance">
+						</div>
+					</div>
+
+
+
+
+
+					<div class="row">
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Farm Holder Ded:</label> <input
+								type="number" th:field="*{farm_smallHolderDeductions}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Farm Small Holder Deductions">
+						</div>
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Farm Holder Bal:</label> <input
+								type="number" th:field="*{farmSmallHolderBalance}"
+								class="form-control" data-toggle="tooltip"
+								data-placement="right" title="Farm Small Holder Balance">
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{carLoanDeductions}">Car Loan Deductions:</label> <input step="0.01"
+								type="number" th:field="*{carLoanDeductions}" class="form-control">
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{carLoanBalance}">Car Loan Balance:</label> <input
+								type="number" step="0.01" th:field="*{carLoanBalance}" 
+								class="form-control">
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Personal Loan Ded:</label> <input
+								type="number" th:field="*{personalLoanDeductions}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Personal Loan Deductions">
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Personal Loan Bal:</label> <input
+								type="number" th:field="*{personalLoanBalance}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Personal Loan Balance">
+						</div>
+
+
+					</div>
+
+
+					<div class="row">
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{cityCouncilRatesDeductions}">CityCouncil
+								Ded:</label> <input type="number" step="0.01"
+								th:field="*{cityCouncilRatesDeductions}" class="form-control"
+								data-toggle="tooltip" data-placement="right"
+								title="City Council Rates Deductions">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">CityCouncil Bal:</label> <input
+								type="number" step="0.01" th:field="*{cityCouncilRatesBalance}"
+								class="form-control" data-toggle="tooltip" 
+								data-placement="right" title="City Council Rates Balance">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Educ Loan Ded:</label> <input type="number"
+								th:field="*{educationalLoanDeductions}" class="form-control"
+								data-toggle="tooltip" data-placement="right" step="0.01"
+								title="Educational Loan Balance">
+						</div>
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Educ Loan Balance:</label> <input
+								type="number" th:field="*{educationalLoanBalance}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Educatonal Loan Balance">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Insurances Ded:</label> <input
+								type="number" th:field="*{insurancesDeductions}"
+								class="form-control" data-toggle="tooltip" step="0.01"
+								data-placement="right" title="Insurances Loan Balance">
+						</div>
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Insurances Bal:</label> <input
+								type="number" th:field="*{insurancesBalance}" class="form-control" step="0.01"
+								data-toggle="tooltip" data-placement="right"
+								title="Insurance Loan Balance">
+						</div>
+
+
+					</div>
+
+
+					<div class="row">
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Other Balance:</label> <input step="0.01"
+								type="number" th:field="*{otherBalance}" class="form-control">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Other Deductions:</label> <input step="0.01"
+								type="number" th:field="*{otherDeductions}" class="form-control">
+						</div>
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="*{basic_salary}">Target Savings:</label> <input step="0.01"
+								type="number" th:field="*{targetSavings}" class="form-control">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Statutory Ded:</label> <input type="number" step="0.01"
+								th:field="*{statutoryDeductions}" class="form-control">
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Ded exc leave :</label> <input
+								type="number" th:field="*{otherDeductionsExcLeaveAllowance}" step="0.01"
+								class="form-control" data-toggle="tooltip"
+								data-placement="right"
+								title="Other Deductions Exc Leave Allowance">
+						</div>
+
+					</div>
+				</div>
+
+				<div style="border-style: outset;">
+
+					<h5>Loan Details</h5>
+					<hr>
+
+					<div class="row">
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="dateLoanRequired">Date Loan Req'd:</label> <input
+								type="date" th:field="*{dateLoanRequired}" class="form-control">
+							<span th:if="${#fields.hasErrors('dateLoanRequired')}"
+								th:errors="*{dateLoanRequired}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="dateOfFirstInstallment">First Installment:</label> <input
+								type="date" th:field="*{dateOfFirstInstallment}"
+								class="form-control"> <span
+								th:if="${#fields.hasErrors('dateOfFirstInstallment')}"
+								th:errors="*{dateOfFirstInstallment}"></span>
+						</div>
+
+						<div class="form-group mb-2 col-2">
+							<label for="dateOfLastInstallment">Last Installment:</label> <input
+								type="date" th:field="*{dateOfLastInstallment}"
+								class="form-control"> <span
+								th:if="${#fields.hasErrors('dateOfLastInstallment')}"
+								th:errors="*{dateOfLastInstallment}"></span>
+						</div>
+						
+						
+						
+						
+						
+						
+
+
+						<div class="form-group mb-2 col-2">
+							<label for="allowances">Loan Type:</label> <select
+								th:field="*{loanType}">
+								<option th:value="'Staff upto 12 months'" th:text="'Staff upto 12 months'"></option>
+								<option th:value="'Staff upto 48 months'" th:text="'Staff upto 48 months'"></option>
+							</select>
+
+						</div>
+						
+						<div class="form-group mb-2 col-2">
+							<label for="nextApprover">Next Approver:</label> <select name="nextApprover">
+								<option Value ="Supervisor">Head office Supervisor or Branch Manager</option>
+								<option Value="EManager"> Executive Manager</option>
+							</select>
+
+						</div>
+					</div>
+
+
+					<div class="row">
+
+						<div class="form-group mb-3 col-3">
+							<label for="allowances">Loan Amount:</label> <input type="number" step="0.01"
+								th:field="*{loanAmount}" class="form-control">
+						</div>
+
+						<div class="form-group mb-5 col-5">
+							<label for="*{basic_salary}">Loan Amount in Words:</label> <input
+								type="text" th:field="*{loanAmountWords}" class="form-control">
+						</div>
+
+
+
+						<div class="form-group mb-4 col-4">
+							<label for="*{basic_salary}">Purpose Of Loan:</label> <input
+								type="text" th:field="*{purposeOfLoan}" class="form-control">
+						</div>
+
+					</div>
+
+				</div>
+				<div style="border-style: outset;">
+
+					<h5>Loan Comments</h5>
+					<hr>
+
+
+					<div class="row">
+					
+					<div class="form-group mb-2 col-2">
+							<label for="*{payslipLocation}">View Pay Slip:</label> <a
+								th:href="@{/staffLoan/download_file(fileName = *{payslipLocation})}"
+								class="text-danger">download</a>
+						</div>
+					
+
+						<div class="form-group mb-10 col-10">
+							<label for="*{applicantComment}">Employee Comment:</label><input
+								type="text" th:field="*{applicantComment}" class="form-control" />
+							<span th:if="${#fields.hasErrors('applicantComment')}"
+								th:errors="*{applicantComment}"></span>
+
+						</div>
+
+					</div>
+					
+					<input type="submit" class="btn btn-info col-2" name="action" value="Preview" />
+
+					<input type="submit" class="btn btn-info col-2" name="action" value="Save" />
+					
+				</div>
+			</div>
+		</form>
+
+		<hr>
+		<a th:href="@{/staffLoan/staffLoanStatus}">Back to Staff Loans
+			List</a>
+	</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

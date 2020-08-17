@@ -1,0 +1,75 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="refresh" content="30">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+
+
+<link href="../static/css/bootstrap.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.css}" />
+<link href="../static/css/menu.css" rel="stylesheet"
+	th:href="@{/css/menu.css}" />
+
+<title>Staff Loan Status</title>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">...</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-2" style="border-style: outset;">
+
+				<h4 style="background-color: #808080">Quick links</h4>
+				<hr>
+
+				<div th:replace="fragments/sidebar :: sidebar">...</div>
+
+			</div>
+			<div class="col-10" style="border-style: outset;">
+
+
+
+				<h3>ESDB STAFF LOAN APP</h3>
+				<hr>
+
+				
+
+
+				<table class="table table-bordered table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th>#</th>
+							<th>Loan Ref</th>
+							<th>Loan Status</th>
+							<th>Date Created</th>
+							<th>Time Elapsed</th>
+							<th>Last Updated</th>
+
+
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="tempStaffLoans : ${staffLoans}">
+
+							<td th:text="${tempStaffLoans.id}" />
+							<td th:text="${tempStaffLoans.employeeLoanRef}" />
+							<td th:text="${tempStaffLoans.loanStatus}" />
+							<td th:text="${tempStaffLoans.dateCreated}" />
+							<td th:text="${tempStaffLoans.timeElapsed}" />
+							<td th:text="${tempStaffLoans.lastUpdated}" />
+
+
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer">...</div>
+	<script type="text/javascript" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+	<script type="text/javascript" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>
