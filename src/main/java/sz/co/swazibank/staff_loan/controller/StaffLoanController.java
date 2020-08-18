@@ -63,6 +63,7 @@ public class StaffLoanController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 	private static String JSON_STAFF_LOAN_SETUP = "http://mlu-itc-dw-03.mshome.net:8091/setuprest/staffLoanSetup/1";
+	private static String JSON_STAFFLOAN = null;
 	
 	Logger log = Logger.getLogger(StaffLoanController.class.getName());
 	//private static Logger LOGGER = LoggerFactory.getLogger(StaffLoanController.class);
@@ -317,15 +318,13 @@ public class StaffLoanController {
 			if (nextApprover.equals("Supervisor")) {
 				mailBody = "Dear " + theStaffLoan.getSupervisor() + "\n \n" + "A new Staff Loan has been Submitted by "
 						+ theStaffLoan.getFirstName() + " " + theStaffLoan.getSurname() + " with reference: "
-						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link http://" + server
-						+ "/staffLoan/staffLoanGetSupervisorComment/" + theStaffLoan.getId() + " to comment."
+						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link "+staffLoanLink()+"staffLoanGetSupervisorComment/" + theStaffLoan.getId() + " to comment."
 						+ "\nThis mail is Auto generated. Please Contact the Applicant on "
 						+ theStaffLoan.getEmployeeEmail() + " for additional Information.";
 			} else if (nextApprover.equals("EManager")) {
 				mailBody = "Dear " + theStaffLoan.getSupervisor() + "\n \n" + "A new Staff Loan has been Submitted by "
 						+ theStaffLoan.getFirstName() + " " + theStaffLoan.getSurname() + " with reference: "
-						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link http://" + server
-						+ "/staffLoan/staffLoanGetEMComment/" + theStaffLoan.getId() + " to comment."
+						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link "+staffLoanLink()+"staffLoan/staffLoanGetEMComment/" + theStaffLoan.getId() + " to comment."
 						+ "\nThis mail is Auto generated. Please Contact the Applicant on "
 						+ theStaffLoan.getEmployeeEmail() + " for additional Information.";
 			}
@@ -431,8 +430,7 @@ public class StaffLoanController {
 			if (nextApprover.equals("Supervisor")) {
 				mailBody = "Dear " + theStaffLoan.getSupervisor() + "\n \n" + "A new Staff Loan has been Submitted by "
 						+ theStaffLoan.getFirstName() + " " + theStaffLoan.getSurname() + " with reference: "
-						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link http://" + server
-						+ "/staffLoan/staffLoanGetSupervisorComment/" + theStaffLoan.getId() + " to comment."
+						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link "+staffLoanLink()+"staffLoanGetSupervisorComment/" + theStaffLoan.getId() + " to comment."
 						+ "\nThis mail is Auto generated. Please Contact the Applicant on "
 						+ theStaffLoan.getEmployeeEmail() + " for additional Information.";
 			} else if (nextApprover.equals("EManager")) {
@@ -511,8 +509,7 @@ public class StaffLoanController {
 				String subject = "Loan Ref " + theStaffLoan.getEmployeeLoanRef() + " requires your attention";
 				String mailBody = "Dear " + theStaffLoan.getHod() + "\n \n" + "A new Staff Loan has been Submitted by "
 						+ theStaffLoan.getFirstName() + " " + theStaffLoan.getSurname() + " with reference: "
-						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link http://" + server
-						+ "/staffLoan/staffLoanGetEMComment/" + theStaffLoan.getId() + " to comment."
+						+ theStaffLoan.getEmployeeLoanRef() + "  Please Click on the link "+staffLoanLink()+"staffLoanGetEMComment/" + theStaffLoan.getId() + " to comment."
 						+ "\nThis mail is Auto generated. Please Contact the Applicant on "
 						+ theStaffLoan.getEmployeeEmail() + " for additional Information.";
 
@@ -546,7 +543,7 @@ public class StaffLoanController {
 						+ "Your staff loan with reference: " + theStaffLoan.getEmployeeLoanRef()
 						+ " requires your action as detailed in the comments. " + "\n\n========> "
 						+ theStaffLoan.getSupervisorComment() + " \n\n========> made at this time: " + new Date()
-						+ " \n\nPlease Click on the link http://" + server + "/staffLoan/staffLoanGetStaffComment/"
+						+ " \n\nPlease Click on the link "+staffLoanLink()+"staffLoanGetStaffComment/"
 						+ theStaffLoan.getId() + " to comment."
 						+ "\n\nThis mail is Auto generated. Please Contact the Supervisor on "
 						+ theStaffLoan.getSupervisorEmail() + " for additional Information.";
@@ -637,7 +634,7 @@ public class StaffLoanController {
 				String mailBody = "Dear " + theStaffLoan.getPayrollAdministrator() + "\n \n"
 						+ "A new Staff Loan has been Submitted by " + theStaffLoan.getFirstName() + " "
 						+ theStaffLoan.getSurname() + " with reference: " + theStaffLoan.getEmployeeLoanRef()
-						+ "  Please Click on the link http://" + server + "/staffLoan/staffLoanGetPayrollAdminComments/"
+						+ "  Please Click on the link "+staffLoanLink()+"staffLoanGetPayrollAdminComments/"
 						+ theStaffLoan.getId() + " to comment."
 						+ "\n\nThis mail is Auto generated. Please Contact the Applicant on "
 						+ theStaffLoan.getEmployeeEmail() + " for additional Information.";
@@ -674,7 +671,7 @@ public class StaffLoanController {
 						+ "Your staff loan with reference: " + theStaffLoan.getEmployeeLoanRef()
 						+ " requires your action as detailed in the comments. " + "\n\n========> "
 						+ theStaffLoan.getSupervisorComment() + " \n\n========> made at this time: " + new Date()
-						+ " \n\nPlease Click on the link http://" + server + "/staffLoan/staffLoanGetStaffComment/"
+						+ " \n\nPlease Click on the link "+staffLoanLink()+"staffLoanGetStaffComment/"
 						+ theStaffLoan.getId() + " to comment."
 						+ "\n\nThis mail is Auto generated. Please Contact the Supervisor on "
 						+ theStaffLoan.getHodEmail() + " for additional Information.";
@@ -750,8 +747,7 @@ public class StaffLoanController {
 				String mailBody = "Dear " + theStaffLoan.getSeniorHrManager() + " \n \n"
 						+ "A new Staff Loan has been Submitted by " + theStaffLoan.getFirstName() + " "
 						+ theStaffLoan.getSurname() + " with reference: " + theStaffLoan.getEmployeeLoanRef()
-						+ "  Please Click on the link http://" + server
-						+ "/staffLoan/staffLoanGetStatusSeniorHrManagerComments/" + theStaffLoan.getId()
+						+ "  Please Click on the link "+staffLoanLink()+"staffLoanGetStatusSeniorHrManagerComments/" + theStaffLoan.getId()
 						+ " to comment." + "\n\nThis mail is Auto generated. Please Contact the Applicant on "
 						+ theStaffLoan.getEmployeeEmail() + " for additional Information.";
 
@@ -787,7 +783,7 @@ public class StaffLoanController {
 						+ "Your staff loan with reference: " + theStaffLoan.getEmployeeLoanRef()
 						+ " requires your action as detailed in the comments. " + "\n\n========> "
 						+ theStaffLoan.getSupervisorComment() + " \n\n========> made at this time: " + new Date()
-						+ " \n\nPlease Click on the link http://" + server + "/staffLoan/staffLoanGetStaffComment/"
+						+ " \n\nPlease Click on the link "+staffLoanLink()+"staffLoanGetStaffComment/"
 						+ theStaffLoan.getId() + " to comment."
 						+ "\n\nThis mail is Auto generated. Please Contact the Supervisor on "
 						+ theStaffLoan.getHodEmail() + " for additional Information.";
@@ -863,8 +859,7 @@ public class StaffLoanController {
 				String subject = "Loan Ref " + theStaffLoan.getEmployeeLoanRef() + " requires your attention";
 				String mailBody = "Dear " + theStaffLoan.getFirstName() + " " + theStaffLoan.getSurname() + " \n \n"
 						+ "Your loan with reference: " + theStaffLoan.getEmployeeLoanRef()
-						+ " has been Approved. Please Click on the link http://" + server
-						+ "/staffLoan/getStaffLoanUploadSecurities/" + theStaffLoan.getId()
+						+ " has been Approved. Please Click on the link "+staffLoanLink()+"getStaffLoanUploadSecurities/" + theStaffLoan.getId()
 						+ " to generate securities and upload." + "\n\nThis mail is Auto generated.";
 
 				try {
@@ -1195,6 +1190,36 @@ public class StaffLoanController {
 		}
 
 		return responseAction;
+
+	}
+	
+	public String staffLoanLink() throws IOException {
+
+		String url = null;
+		String name = null;
+
+		List<Application> applications = discoveryClient.getApplications().getRegisteredApplications();
+
+		for (Application application : applications) {
+			List<InstanceInfo> applicationsInstances = application.getInstances();
+			for (InstanceInfo applicationsInstance : applicationsInstances) {
+
+				name = applicationsInstance.getAppName();
+
+				if (name.equals("STAFF-LOAN-SERVICE"))
+
+				{
+
+					url = applicationsInstance.getHomePageUrl();
+
+					JSON_STAFFLOAN = url + "staffLoan/";
+				}
+
+			}
+
+		}
+
+		return JSON_STAFFLOAN;
 
 	}
 
