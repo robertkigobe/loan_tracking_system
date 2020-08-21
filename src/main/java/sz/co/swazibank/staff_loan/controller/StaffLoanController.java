@@ -62,14 +62,15 @@ public class StaffLoanController {
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
-	private static String JSON_STAFF_LOAN_SETUP = "http://mlu-itc-dw-03.mshome.net:8091/setuprest/staffLoanSetup/1";
+	private static String JSON_STAFF_LOAN_SETUP_VALUES = null;;
+	private static String JSON_STAFF_LOAN_SETUP = null;
 	private static String JSON_STAFFLOAN = null;
 	
 	Logger log = Logger.getLogger(StaffLoanController.class.getName());
 	//private static Logger LOGGER = LoggerFactory.getLogger(StaffLoanController.class);
 	
-	@Autowired
-	RestTemplate restTemplate;
+	//@Autowired
+	//RestTemplate restTemplate;
 
 	@Autowired
 	protected Validator validator;
@@ -130,6 +131,37 @@ public class StaffLoanController {
 	    }
 	   
 	    response.sendRedirect(JSON_STAFF_LOAN_SETUP);
+	   
+	}
+	
+	
+	public String staffLoanSetUpValues() throws IOException {
+				
+		String url = null;
+		String name = null;
+		
+		List<Application> applications = discoveryClient.getApplications().getRegisteredApplications();
+
+	    for (Application application : applications) {
+	        List<InstanceInfo> applicationsInstances = application.getInstances();
+	        for (InstanceInfo applicationsInstance : applicationsInstances) {
+	        	
+	        	name = applicationsInstance.getAppName();
+	        	     	
+	        	if(name.equals("LOAN-SETUP-SERVICE"))	        			        		
+	        		
+	        	{	        		
+	        		url = applicationsInstance.getHomePageUrl();	        		
+	        		
+	        		JSON_STAFF_LOAN_SETUP_VALUES = url+"setuprest/staffLoanSetup/1";
+	        		
+	        	}
+
+	        }
+	        
+	    }
+	   
+	    return JSON_STAFF_LOAN_SETUP_VALUES;
 	   
 	}
 	
@@ -230,15 +262,19 @@ public class StaffLoanController {
 			Errors error, @RequestParam("action") String action, @RequestParam("file") MultipartFile file,
 			@RequestParam("nextApprover") String nextApprover, RedirectAttributes atts) throws IOException {
 		
+		RestTemplate restTemplate = new RestTemplate();
+		String  uriValue = staffLoanSetUpValues();
+		
+		System.out.println("=======> uriValue "+ uriValue);
+		
 
-    Map<String, String> params = new HashMap<String, String>();
-    params.put("theId", "1");
-     
-    RestTemplate restTemplate = new RestTemplate();
-    StaffLoanSetup theStaffLoanSetup = restTemplate.getForObject(JSON_STAFF_LOAN_SETUP, StaffLoanSetup.class, params);
+		 StaffLoanSetup theStaffLoanSetup = restTemplate.getForObject(uriValue, StaffLoanSetup.class);
      
 
 		float funeralCover = theStaffLoanSetup.getFuneralCover();
+		
+		System.out.println("=======> Funeral Cover"+ funeralCover);
+		
 		float interestRate = theStaffLoanSetup.getInterestRate();
 		String payrollAdministrator = theStaffLoanSetup.getPayrollAdmin();
 		String payrollAdministratorEmail = theStaffLoanSetup.getPayrollAdminEmail();
@@ -355,13 +391,9 @@ public class StaffLoanController {
 			Errors error, @RequestParam("action") String action, @RequestParam("nextApprover") String nextApprover,
 			RedirectAttributes atts) throws IOException {
 
-		
 
-	    Map<String, String> params = new HashMap<String, String>();
-	    params.put("theId", "1");
-	     
 	    RestTemplate restTemplate = new RestTemplate();
-	    StaffLoanSetup theStaffLoanSetup = restTemplate.getForObject(JSON_STAFF_LOAN_SETUP, StaffLoanSetup.class, params);
+	    StaffLoanSetup theStaffLoanSetup = restTemplate.getForObject(staffLoanSetUpValues(), StaffLoanSetup.class);
 
 		float funeralCover = theStaffLoanSetup.getFuneralCover();
 		float interestRate = theStaffLoanSetup.getInterestRate();

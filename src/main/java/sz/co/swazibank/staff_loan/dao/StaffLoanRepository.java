@@ -13,13 +13,13 @@ public interface StaffLoanRepository extends JpaRepository<StaffLoan, Integer>{
 	
 	StaffLoan findStaffLoanById(int id);
 	
-	@Query(value="SELECT * FROM swazibank_intranet.staff_loan where loan_status != 'Loan disbursed' order by last_updated desc", nativeQuery=true)
+	@Query(value="SELECT * FROM staff_loan where loan_status != 'Loan disbursed' order by last_updated desc", nativeQuery=true)
 	List<StaffLoan> findInProgress();
 	
-	@Query(value="SELECT * FROM swazibank_intranet.staff_loan where loan_status = 'Loan disbursed' order by last_updated desc", nativeQuery=true)
+	@Query(value="SELECT * FROM staff_loan where loan_status = 'Loan disbursed' order by last_updated desc", nativeQuery=true)
 	List<StaffLoan> findDisbursed();
 	
-	@Query(value="SELECT * FROM swazibank_intranet.staff_loan where loan_status = 'Loan Cancelled' order by last_updated desc", nativeQuery=true)
+	@Query(value="SELECT * FROM staff_loan where loan_status = 'Loan Cancelled' order by last_updated desc", nativeQuery=true)
 	List<StaffLoan> findCancelled();
 	
 }
